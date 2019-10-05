@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import jsonify
 from okreads.book import Book
+from okreads.db import Db
 
 app = Flask(__name__)
 
@@ -13,10 +14,9 @@ def hello():
 @app.route('/books')
 def books():
 
-    book1 = Book(123, 'harry potter', 'rowlling')
-    book2 = Book(321, 'harry potter 2', 'rowlling')
+    result = Db.fetchAll("SELECT * FROM book LIMIT=10;")
 
-    return jsonify({'books': [book1.to_dict(), book2.to_dict()]})
+    return jsonify({'books': [result]})
 
 
 if __name__ == '__main__':

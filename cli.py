@@ -33,7 +33,7 @@ def import_open_library(dumpfile, limit):
 @cli.command()
 def create_database():
     Db.execute(
-        "CREATE TABLE book (id serial PRIMARY KEY, isbn char(255), title char(255), author char(255));"
+        "CREATE TABLE public.book (id serial PRIMARY KEY, isbn char(255), title char(255), author char(255));"
     )
 
 

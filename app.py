@@ -1,17 +1,8 @@
 from flask import Flask
 from flask import jsonify
+from okreads.book import Book
 
 app = Flask(__name__)
-
-
-class Book:
-    def __init__(self, isbn, title, author):
-        self.isbn = isbn
-        self.title = title
-        self.author = author
-
-    def to_dict(self):
-        return {'isbn': self.isbn, 'title': self.title, 'author': self.author}
 
 
 @app.route('/')

@@ -21,4 +21,4 @@ def books():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(host='127.0.0.1')

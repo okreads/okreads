@@ -22,6 +22,7 @@ class BookRepository:
 
     def getAll(self, limit=100):
         books = Db.fetchAll(f'SELECT * FROM book LIMIT {limit};')
+        print(books)
         return list(map(self._mapToEntity, books))
 
     def _mapToEntity(self, data):

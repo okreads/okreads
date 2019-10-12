@@ -51,8 +51,9 @@ def create_database():
     Db.execute("""
             CREATE TABLE book (id serial PRIMARY KEY, isbn char(255), title char(255), author char(255));
             CREATE TABLE author (
-               ID serial NOT NULL PRIMARY KEY,
-               info json NOT NULL
+               id serial NOT NULL PRIMARY KEY,
+               info json NOT NULL,
+               open_library_id char(100) NULL UNIQUE
             );
         """)
 

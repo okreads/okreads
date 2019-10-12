@@ -32,7 +32,7 @@ ui = Blueprint('ui', __name__, static_folder='okreads/static/', template_folder=
 def author_details_page(author_id):
     repository = AuthorRepository()
     author = repository.getById(author_id)
-    return render_template('author.html', author=author.to_dict())
+    return jsonify(author.to_dict())
 
 
 @ui.route('/book/<int:book_id>', methods=['GET'])

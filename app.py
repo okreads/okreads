@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, Blueprint, render_template
 from okreads.book import Book, BookRepository
 from okreads.db import Db
+from okreads.author import AuthorRepository
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def hello():
 @app.route('/api/books')
 def books():
     repository = BookRepository()
-    result = list(map(lambda x: x.to_dict(), repository.getAll(10)))
+    result = list(map(lambda x: x.to_dict(), repository.getAll()))
     return jsonify({'books': result})
 
 
@@ -25,6 +26,13 @@ def book(book_id):
 
 
 ui = Blueprint('ui', __name__, static_folder='okreads/static/', template_folder='okreads/template/')
+
+
+@ui.route('/author/<int:author_id>', methods=['GET'])
+def author_details_page(author_id):
+    repository = AuthorRepository()
+    author = repository.getById(author_id)
+    return render_template('author.html', author=author.to_dict())
 
 
 @ui.route('/book/<int:book_id>', methods=['GET'])

@@ -1,4 +1,5 @@
 from okreads.db import Db
+import sys
 
 
 class Book:
@@ -18,9 +19,9 @@ class Book:
 class BookRepository:
     def getById(self, id) -> Book:
         book = Db.fetchAll(f'SELECT * FROM book where id={id};')
-        return self._mapToEntity(book[0])
+        return self._mapToEntity(book.first())
 
-    def getAll(self, limit=100):
+    def getAll(self, limit=3):
         books = Db.fetchAll(f'SELECT * FROM book LIMIT {limit};')
         return list(map(self._mapToEntity, books))
 

@@ -1,6 +1,8 @@
 flask>=1.0.0
 click
 pandas
+#database
+sqlalchemy
 psycopg2
 #for the progress bar
 tqdm

@@ -1,7 +1,7 @@
 runtime: custom
 env: flex
 
-entrypoint: /usr/local/bin/gunicorn -t 500 --worker-class eventlet -w 2 --access-logfile - -b 0.0.0.0:8080 app:app
+entrypoint: /usr/local/bin/gunicorn -t 500 --worker-class eventlet -w 2 --access-logfile - -b 0.0.0.0:5000 app:app
 
 manual_scaling:
   instances: 1

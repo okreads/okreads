@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+import os
 
 
 class Db:
@@ -22,7 +23,7 @@ class Db:
         DB_NAME = 'okreads'
         DB_USER = 'test'
         DB_PASS = 'test'
-        DB_HOST = 'db'
+        DB_HOST = os.environ.get('DB_HOST', 'localhost')
         DB_PORT = '5432'
 
         return create_engine(f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')

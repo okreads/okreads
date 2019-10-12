@@ -4,7 +4,7 @@ from okreads.book import Book
 import json
 from tqdm import tqdm
 from okreads.db import Db
-from okreads.openlibrary import import_author
+from okreads.openlibrary import import_author, import_book
 
 
 @click.group()
@@ -25,9 +25,7 @@ def import_open_library(dumpfile, limit):
         if limit and i >= limit:
             break
 
-        book = Book.from_dict(json.loads(entity))
-
-        Db.execute("INSERT INTO book (title, author) VALUES (%s, %s)", (book.title, book.author))
+        import_book(entity)
 
 
 @cli.command()

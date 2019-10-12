@@ -1,4 +1,5 @@
 from okreads.db import Db
+import json
 import sys
 
 
@@ -8,15 +9,17 @@ class Book:
         self.title = title
         self.author = author
 
-    @staticmethod
-    def from_dict(data: dict):
-        return Book('', data['title'], data['authors'][0]['author']['key'])
-
     def to_dict(self):
         return {'isbn': self.isbn, 'title': self.title, 'author': self.author}
 
 
 class BookRepository:
+    def save(self, book: Book):
+        Db.execute('insert into book (title, author) values (:title, :author)', {
+            'title': book.title,
+            'author': book.author
+        })
+
     def getById(self, id) -> Book:
         book = Db.fetchAll(f'SELECT * FROM book where id={id};')
         return self._mapToEntity(book.first())

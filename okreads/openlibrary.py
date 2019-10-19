@@ -11,10 +11,10 @@ def import_author(single_author_data: dict):
                     data.get('birth_date', ""), data.get('death_date', ""),
                     data.get('wikipedia', ""), open_library_id)
 
-    # breakpoint()
     database_author = AuthorRepository().findByOpenLibraryId(open_library_id)
     if database_author:
-        AuthorRepository().update(database_author)
+        author.id = database_author.id
+        AuthorRepository().update(author)
     else:
         AuthorRepository().create(author)
 

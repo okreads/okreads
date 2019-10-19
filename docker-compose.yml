@@ -12,6 +12,7 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_APP=app.py
+      - DB_HOST=db
 
   db:
     image: postgres

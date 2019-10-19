@@ -45,5 +45,6 @@ def book_details_page(book_id):
 app.register_blueprint(ui, url_prefix='/')
 
 if __name__ == '__main__':
+    app.config['DEBUG'] = True
     app.debug = True
     app.run(host='0.0.0.0')

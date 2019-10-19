@@ -1,4 +1,5 @@
 from okreads.author import Author, AuthorRepository
+from okreads.book import Book, BookRepository
 import json
 
 
@@ -10,3 +11,10 @@ def import_author(single_author_data: dict):
                     data.get('wikipedia', ""), data['key'])
 
     AuthorRepository().save(author)
+
+
+def import_book(single_book_data: dict):
+    data = json.loads(single_book_data)
+
+    book = Book('', data['title'], data['authors'][0]['author']['key'])
+    BookRepository().save(book)

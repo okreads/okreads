@@ -1,0 +1,15 @@
+runtime: custom
+env: flex
+
+entrypoint: /usr/local/bin/gunicorn -t 500 --worker-class eventlet -w 2 --access-logfile - -b 0.0.0.0:5000 app:app
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+skip_files:
+- data_samples/*
+- dumps/*

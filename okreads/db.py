@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.exc import ResourceClosedError
 from sqlalchemy.sql import text
 import os
 
@@ -13,9 +14,18 @@ class Db:
             db.execute(sql)
         # @TODO figure out how to close the connection
 
-    def fetchAll(sql):
+    def fetchAll(sql, parameters):
         db = Db._get_connection()
-        result = db.connect().execute(sql)
+        db.connect()
+
+        try:
+            if parameters:
+                result = db.engine.execute(text(sql), parameters)
+            else:
+                result = db.engine.execute(sql)
+        except ResourceClosedError:
+            return None
+
         return result
 
     @staticmethod

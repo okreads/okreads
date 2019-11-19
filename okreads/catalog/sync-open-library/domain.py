@@ -22,13 +22,16 @@ UnvalidatedBookData = NamedTuple('UnvalidatedBookData', [('author_data', Any), (
 
 LoadOpenLibraryBookData = Callable[[OpenLibraryBookReference], UnvalidatedBookData]
 
-ValidatedBookData = NewType('ValidatedBookData', UnvalidatedBookData)
+PersistedBookData = NewType('PersistedBookData', 'ValidatedBookData')
 
-ValidateBook = Callable[[UnvalidatedBookData], ValidatedBookData]
-PersistedBookData = NewType('PersistedBookData', ValidatedBookData)
-
-PersistBook = Callable[[ValidatedBookData], PersistedBookData]
+PersistBook = Callable[['ValidatedBookData'], PersistedBookData]
 
 
-def validate_book_data(unvalidated: UnvalidatedBookData) -> ValidatedBookData:
-    return ValidatedBookData(unvalidated)
+class ValidatedBookData:
+    def __init__(self, data: UnvalidatedBookData):
+        if len(data.title) < 3:
+            raise Exception('Title should be bigger than 3 chars')
+
+        self.title = data.title
+        self.author_data = data.author_data
+

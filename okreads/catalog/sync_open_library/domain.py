@@ -1,14 +1,13 @@
-from typing import NamedTuple, Any, Callable, List, NewType, Generator
-from okreads.domain import ExistingFile
+from typing import NamedTuple, Any, Callable, NewType, Generator, Optional
+import os
 # public interface
 # @todo create command generic type
 
+WorkflowInterface = Callable[['SyncOpenLibraryCmd'], 'BookPersistedEvents']
 
-SyncOpenLibraryCmd = NamedTuple('SyncOpenLibraryCmd', [('filename', str)])
+SyncOpenLibraryCmd = NamedTuple('SyncOpenLibraryCmd', [('filename', str), ('limit', Optional[int])])
+BookPersistedEvents = Generator['BookPersistedEvent', None, None]
 BookPersistedEvent = NamedTuple('BookPersistedEvent', [('persisted_book_data', 'PersistedBookData')])
-
-BookPersistedEvents = Generator[BookPersistedEvent, None, None]
-WorkflowInterface = Callable[[SyncOpenLibraryCmd], BookPersistedEvents]
 
 # private interface
 
@@ -16,10 +15,8 @@ OpenLibraryBookReference = NewType('OpenLibraryBookReference', str)
 LinesToLoadLimit = NewType('LinesToLoadLimit', int)
 BookReferences = Generator[OpenLibraryBookReference, None, None]
 
-LoadOpenLibraryBookReference = Callable[[ExistingFile, LinesToLoadLimit], BookReferences]
-
+LoadOpenLibraryBookReference = Callable[['ExistingFile', LinesToLoadLimit], BookReferences]
 UnvalidatedBookData = NamedTuple('UnvalidatedBookData', [('author_data', Any), ('title', str)])
-
 LoadOpenLibraryBookData = Callable[[OpenLibraryBookReference], UnvalidatedBookData]
 
 PersistedBookData = NewType('PersistedBookData', 'ValidatedBookData')
@@ -35,3 +32,11 @@ class ValidatedBookData:
         self.title = data.title
         self.author_data = data.author_data
 
+
+class ExistingFile:
+
+    def __init__(self, location: str):
+        if not os.path.exists(location):
+            raise Exception("File does not exist")
+
+        self.location = location

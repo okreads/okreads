@@ -13,6 +13,10 @@ local_web:
 validate:
 	bash -c 'mypy --config-file mypy.ini $$(find -name "*.py")'
 
+cache_clean:
+	rm -rf .mypy_cache
+	find . -name '__pycache__' | rm -rf
+
 # all things production
 production_deploy:
 	gcloud app deploy

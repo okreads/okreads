@@ -1,8 +1,7 @@
-from okreads.domain import ExistingFile
 
-from domain import LoadOpenLibraryBookReference, BookPersistedEvents, SyncOpenLibraryCmd, BookPersistedEvent, LinesToLoadLimit, PersistedBookData, ValidatedBookData, UnvalidatedBookData, LoadOpenLibraryBookData, PersistBook
+from .domain import LoadOpenLibraryBookReference, BookPersistedEvents, SyncOpenLibraryCmd, BookPersistedEvent, LinesToLoadLimit, PersistedBookData, ValidatedBookData, UnvalidatedBookData, LoadOpenLibraryBookData, PersistBook, ExistingFile
 
-from infrastructure import open_library_loader_concrete, book_data_loader_concrete, persist_book
+from .infrastructure import open_library_loader_concrete, book_data_loader_concrete, persist_book
 
 def factory() -> 'Workflow':
     return Workflow(open_library_loader_concrete, book_data_loader_concrete, persist_book)

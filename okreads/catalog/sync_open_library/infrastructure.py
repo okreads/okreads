@@ -1,5 +1,4 @@
-from domain import LinesToLoadLimit, BookReferences, OpenLibraryBookReference, OpenLibraryBookReference, UnvalidatedBookData, PersistedBookData, ValidatedBookData
-from okreads.domain import ExistingFile
+from .domain import LinesToLoadLimit, BookReferences, OpenLibraryBookReference, OpenLibraryBookReference, UnvalidatedBookData, PersistedBookData, ValidatedBookData, ExistingFile
 # from tqdm import tqdm
 # import pandas as pd
 

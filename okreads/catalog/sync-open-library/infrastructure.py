@@ -1,4 +1,4 @@
-from domain import LinesToLoadLimit, BookReferences, OpenLibraryBookReference, OpenLibraryBookReference, UnvalidatedBookData
+from domain import LinesToLoadLimit, BookReferences, OpenLibraryBookReference, OpenLibraryBookReference, UnvalidatedBookData, PersistedBookData, ValidatedBookData
 from okreads.domain import ExistingFile
 # from tqdm import tqdm
 # import pandas as pd
@@ -15,4 +15,9 @@ def open_library_loader_concrete(file: ExistingFile, limit: LinesToLoadLimit) ->
 
 def book_data_loader_concrete(referece: OpenLibraryBookReference) -> UnvalidatedBookData:
     return UnvalidatedBookData(author_data=None, title='foo')
+
+
+def persist_book(validated: ValidatedBookData)-> PersistedBookData:
+    return PersistedBookData(validated)
+
 

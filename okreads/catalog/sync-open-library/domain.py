@@ -25,8 +25,10 @@ LoadOpenLibraryBookData = Callable[[OpenLibraryBookReference], UnvalidatedBookDa
 ValidatedBookData = NewType('ValidatedBookData', UnvalidatedBookData)
 
 ValidateBook = Callable[[UnvalidatedBookData], ValidatedBookData]
-
-PersistBook = Callable[[ValidatedBookData], BookPersistedEvent]
-
-
 PersistedBookData = NewType('PersistedBookData', ValidatedBookData)
+
+PersistBook = Callable[[ValidatedBookData], PersistedBookData]
+
+
+def validate_book_data(unvalidated: UnvalidatedBookData) -> ValidatedBookData:
+    return ValidatedBookData(unvalidated)

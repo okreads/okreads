@@ -1,8 +1,6 @@
 click
 pandas
 #database
-sqlalchemy
-psycopg2
 #for the progress bar
 tqdm
 #webserver

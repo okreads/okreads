@@ -28,33 +28,6 @@ def import_open_library(dumpfile, limit):
         import_book(entity)
 
 
-@cli.command()
-@click.option('--dumpfile',
-              default='data_samples/open_library_authors_1000',
-              help='the file dump path to import')
-@click.option('--limit', default=None, help="pass a limit if you want to import just some files")
-def import_open_library_authors(dumpfile, limit):
-
-    limit = limit if limit is None else int(limit)
-    data = pd.read_csv(dumpfile, delimiter='	', header=None)
-    for i, entity in tqdm(enumerate(data[4].tolist())):
-        if limit and i >= limit:
-            break
-
-        import_author(entity)
-
-
-@cli.command()
-def create_database():
-    Db.execute("""
-            CREATE TABLE book (id serial PRIMARY KEY, isbn char(255), title char(255), author char(255));
-            CREATE TABLE author (
-               id serial NOT NULL PRIMARY KEY,
-               info json NOT NULL,
-               open_library_id char(100) NULL UNIQUE
-            );
-        """)
-
 
 if __name__ == '__main__':
     cli()

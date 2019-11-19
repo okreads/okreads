@@ -12,10 +12,10 @@ BookPersistedEvent = NamedTuple('BookPersistedEvent', [('persisted_book_data', '
 # private interface
 
 OpenLibraryBookReference = NewType('OpenLibraryBookReference', str)
-LinesToLoadLimit = NewType('LinesToLoadLimit', int)
 BookReferences = Generator[OpenLibraryBookReference, None, None]
 
-LoadOpenLibraryBookReference = Callable[['ExistingFile', LinesToLoadLimit], BookReferences]
+
+LoadOpenLibraryBookReference = Callable[['ExistingFile', Optional['LinesToLoadLimit']], BookReferences]
 UnvalidatedBookData = NamedTuple('UnvalidatedBookData', [('author_data', Any), ('title', str)])
 LoadOpenLibraryBookData = Callable[[OpenLibraryBookReference], UnvalidatedBookData]
 
@@ -34,9 +34,18 @@ class ValidatedBookData:
 
 
 class ExistingFile:
-
     def __init__(self, location: str):
         if not os.path.exists(location):
             raise Exception("File does not exist")
 
         self.location = location
+
+class IntBiggerThanZero:
+    def __init__(self, value: int):
+        if value < 1:
+            raise Exception("Must be bigger than zero")
+
+        self.value = value
+
+
+LinesToLoadLimit = IntBiggerThanZero

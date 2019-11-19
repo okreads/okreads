@@ -15,7 +15,12 @@ class Workflow:
         self.persist_book = persist_book
 
     def run(self, cmd: SyncOpenLibraryCmd) -> BookPersistedEvents:
-        for reference in self.book_reference_loader(ExistingFile(cmd.filename), LinesToLoadLimit(1)):
+        limit = None
+
+        if cmd.limit:
+            limit = LinesToLoadLimit(cmd.limit)
+
+        for reference in self.book_reference_loader(ExistingFile(cmd.filename), limit):
             unvalidated_book_data = self.book_data_loader(reference)
             validated_book_data = ValidatedBookData(unvalidated_book_data)
             persisted_book = persist_book(validated_book_data)

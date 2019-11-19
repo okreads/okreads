@@ -1,8 +1,9 @@
+from typing import Optional
 from .domain import LinesToLoadLimit, BookReferences, OpenLibraryBookReference, OpenLibraryBookReference, UnvalidatedBookData, PersistedBookData, ValidatedBookData, ExistingFile
 # from tqdm import tqdm
 # import pandas as pd
 
-def open_library_loader_concrete(file: ExistingFile, limit: LinesToLoadLimit) -> BookReferences:
+def open_library_loader_concrete(file: ExistingFile, limit: Optional[LinesToLoadLimit]) -> BookReferences:
     # limit = limit if limit is None else int(limit)
     # data = pd.read_csv(file.location, delimiter='   ', header=None)
     # for i, entity in tqdm(enumerate(data[4].tolist())):

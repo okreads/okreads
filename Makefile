@@ -10,24 +10,12 @@ local_install:
 local_web:
 	gunicorn -t 500 --worker-class sync -w 1 --access-logfile - --error-logfile - -t 9999 -b 0.0.0.0:8080 app:app
 
-docker_create_databse:
-	docker-compose exec web python cli.py create-database
+validate:
+	bash -c 'mypy --config-file mypy.ini $$(find -name "*.py")'
 
-docker_import_works:
-	docker-compose exec web python cli.py import-open-library --limit 100
-
-docker_import_authors:
-	docker-compose exec web python cli.py import-open-library-authors
-
-docker_downup:
-	docker-compose down
-	docker-compose up
-
-docker_update_dependenceis:
-	docker-compose build
-	make docker_downup
-
-
+cache_clean:
+	rm -rf .mypy_cache
+	find . -name '__pycache__' | rm -rf
 
 # all things production
 production_deploy:

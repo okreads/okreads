@@ -12,14 +12,4 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_APP=app.py
-      - DB_HOST=db
 
-  db:
-    image: postgres
-    restart: always
-    ports:
-      - "127.0.0.1:5432:5432"
-    environment:
-      POSTGRES_PASSWORD: test
-      POSTGRES_USER: test
-      POSTGRES_DB: okreads
